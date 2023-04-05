@@ -1,3 +1,34 @@
+def search_prospects(query, prospects_list):
+    """
+    Search for the query in the given prospects list.
+
+    :param query: The search query (full name).
+    :type query: str
+    :param prospects_list: List of dictionaries containing prospect information.
+    :type prospects_list: list
+    :return: List of matching prospects.
+    :rtype: list
+    """
+    query = query.lower()
+    matches = [prospect for prospect in prospects_list if query in prospect['name'].lower()]
+    return matches
+
+
+def print_matches(matches):
+    """
+    Print the matching prospects.
+
+    :param matches: List of matching prospects.
+    :type matches: list
+    """
+    if not matches:
+        print("No matches found.")
+    else:
+        print("Match found:")
+        for prospect in matches:
+            print("Name:", prospect['name'], "\nEmail:", prospect['email'], "\nPhone:", prospect['phone'], "\n")
+
+
 # Define a list of sales prospects
 prospects = [
     {'name': 'John Smith', 'company': 'ABC Corp', 'email': 'john.smith@abccorp.com', 'phone': '123-456-7890'},
@@ -10,16 +41,7 @@ prospects = [
 query = input("Enter the prospect's full name: ")
 
 # Search for the query in the prospects list
-matches = []
-for prospect in prospects:
-    if query.lower() in prospect['name'].lower() or query.lower() in prospect['email'].lower() or query in prospect['phone']:
-        matches.append(prospect)
+matches = search_prospects(query, prospects)
 
 # Print the matching prospects
-if len(matches) == 0:
-    print("No matches found.")
-else:
-    print("Matches found:")
-    for prospect in matches:
-        print(prospect['name'], '-', prospect['company'], '-', prospect['email'], '-', prospect['phone'])
-
+print_matches(matches)
